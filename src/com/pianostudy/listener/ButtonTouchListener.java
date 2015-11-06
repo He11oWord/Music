@@ -8,7 +8,7 @@ import android.view.View.OnTouchListener;
 import com.pianostudy.ButtonActivity;
 
 /**
- * 按键的发声接口
+ * 按键的点击事件接口
  */
 public class ButtonTouchListener implements OnTouchListener {
 	private ButtonActivity ba;
