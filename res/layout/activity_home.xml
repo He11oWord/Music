@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="enterButton"
-        android:text="进入钢琴键的页面" />
+        android:text="进入横屏钢琴键的页面" />
 
     <Button
         android:layout_width="wrap_content"
@@ -26,5 +26,11 @@
         android:layout_height="wrap_content"
         android:onClick="enterPitch"
         android:text="进入音高的页面" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="enterPortraitButton"
+        android:text="进入竖屏钢琴键的页面" />
 
 </LinearLayout>
