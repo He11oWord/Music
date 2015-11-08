@@ -92,35 +92,6 @@ public class ButtonActivity extends Activity implements View.OnClickListener {
 			buttonList.get(i).setOnTouchListener(
 					new ButtonTouchListener(this, i-1));
 		}
-		// this.white1.setOnTouchListener(new ButtonTouchListener(this, 1));
-		// this.black1.setOnTouchListener(new MainActivity.2(this));
-		// this.white2.setOnTouchListener(new MainActivity.3(this));
-		// this.white3.setOnTouchListener(new MainActivity.4(this));
-		// this.white4.setOnTouchListener(new MainActivity.5(this));
-		// this.white5.setOnTouchListener(new MainActivity.6(this));
-		// this.white6.setOnTouchListener(new MainActivity.7(this));
-		// this.white7.setOnTouchListener(new MainActivity.8(this));
-		// this.white8.setOnTouchListener(new MainActivity.9(this));
-		// this.white9.setOnTouchListener(new MainActivity.10(this));
-		// this.white10.setOnTouchListener(new MainActivity.11(this));
-		// this.white11.setOnTouchListener(new MainActivity.12(this));
-		// this.white12.setOnTouchListener(new MainActivity.13(this));
-		// this.white13.setOnTouchListener(new MainActivity.14(this));
-		// this.white14.setOnTouchListener(new MainActivity.15(this));
-		// this.white15.setOnTouchListener(new MainActivity.16(this));
-		// this.white16.setOnTouchListener(new MainActivity.17(this));
-
-		// this.black1.setOnTouchListener(new MainActivity.18(this));
-		// this.black2.setOnTouchListener(new MainActivity.19(this));
-		// this.black3.setOnTouchListener(new MainActivity.20(this));
-		// this.black4.setOnTouchListener(new MainActivity.21(this));
-		// this.black5.setOnTouchListener(new MainActivity.22(this));
-		// this.black6.setOnTouchListener(new MainActivity.23(this));
-		// this.black7.setOnTouchListener(new MainActivity.24(this));
-		// this.black8.setOnTouchListener(new MainActivity.25(this));
-		// this.black9.setOnTouchListener(new MainActivity.26(this));
-		// this.black10.setOnTouchListener(new MainActivity.27(this));
-		// this.logout.setOnClickListener(new MainActivity.28(this));
 	}
 
 	/**

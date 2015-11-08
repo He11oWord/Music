@@ -138,7 +138,7 @@
             android:layout_weight="1"
             android:button="@drawable/white_selector" />
     </LinearLayout>
-    
+
     <!-- 第三行，黑键 -->
 
     <LinearLayout
@@ -283,11 +283,13 @@
         android:weightSum="8" >
 
         <TextView
+            android:id="@+id/tv_item_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="等级：1，题目：1" />
 
         <TextView
+            android:id="@+id/tv_reminder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="请点击play键听音" />
@@ -303,22 +305,26 @@
                 android:orientation="vertical" >
 
                 <Button
+                    android:id="@+id/last_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="&lt;" />
 
                 <Button
+                    android:id="@+id/last_level"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="&lt;&lt;" />
             </LinearLayout>
 
             <Button
+                android:id="@+id/play"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="play" />
 
             <Button
+                android:id="@+id/ok"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="ok" />
@@ -329,14 +335,16 @@
                 android:orientation="vertical" >
 
                 <Button
+                    android:id="@+id/next_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="&lt;" />
+                    android:text=">" />
 
                 <Button
+                    android:id="@+id/next_level"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="&lt;&lt;" />
+                    android:text=">>" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
