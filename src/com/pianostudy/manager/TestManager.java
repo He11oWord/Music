@@ -12,11 +12,11 @@ public class TestManager {
 	 */
 	public int maxlev = 100;
 
-	public ItemInfo testOflev[][];// = new testitem[maxlev][];
+	public ItemInfo testOflev[][];
 
-	static public ItemInfo anaTests[][][] = new ItemInfo[6][][];
+	static public ItemInfo anaTests[][][] = new ItemInfo[7][][];
 
-	static public ItemInfo pitchTests[][][] = new ItemInfo[7][][];
+	static public ItemInfo pitchTests[][][] = new ItemInfo[8][][];
 
 	TestGenerator test_gen = new TestGenerator();
 
@@ -40,8 +40,8 @@ public class TestManager {
 	 * @return 返回的是一个TestItem类
 	 */
 	public ItemInfo gettest(int testno, int itemno) {
-		System.out.print("gettest i=" + testno + ",j=" + itemno + ":n="
-				+ testOflev.length + "\n");// 打印当前的题目信息
+//		System.out.print("gettest i=" + testno + ",j=" + itemno + ":n="
+//				+ testOflev.length + "\n");// 打印当前的题目信息
 		ItemInfo d = testOflev[testno][itemno];// 从该数组中拿出题目
 		return d;
 	}
@@ -59,7 +59,7 @@ public class TestManager {
 			initAna(mainlevel);
 			testOflev = anaTests[mainlevel];
 			maxlev = testOflev.length;// 刚开始为0
-		} else if (testclass == 0) {
+		} else if (testclass == 2) {
 			initPitch(mainlevel);
 			testOflev = pitchTests[mainlevel];
 			maxlev = testOflev.length;
@@ -173,7 +173,7 @@ public class TestManager {
 			int m = tests[i].length;
 			ItemInfo[] to = new ItemInfo[m];
 			for (int j = 0; j < m; j++) {
-				to[j] = new ItemInfo(tests[i][j], false);
+				to[j] = new ItemInfo(tests[i][j], is_Cord);
 				to[j].setKey(mainlevel, j);
 			}
 			// to还是一个一维数组？但是里面已经有了值

@@ -27,7 +27,7 @@
             android:screenOrientation="landscape" />
         <activity android:name="com.pianostudy.PitchActivity" />
         <activity android:name="com.pianostudy.AnalysysActivity" />
-        <activity android:name="com.pianostudy.PortraitButtonActivity"/>
+        <activity android:name="com.pianostudy.PitchPortraitButtonActivity"/>
     </application>
 
 </manifest>

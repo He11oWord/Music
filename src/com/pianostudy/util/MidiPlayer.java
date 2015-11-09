@@ -13,6 +13,8 @@ import android.media.MediaPlayer.OnCompletionListener;
  */
 public class MidiPlayer {
 
+	private static MediaPlayer audioPlayer;
+
 	/**
 	 * ²¥·Å¸ÖÇÙ¼üµÄÉùÒô
 	 * 
@@ -23,9 +25,13 @@ public class MidiPlayer {
 	 */
 	public static void play(Context context, String fileName) throws Exception {
 
-		final MediaPlayer audioPlayer = new MediaPlayer();
+		if (audioPlayer != null) {
+			audioPlayer.release();
+		}
+		audioPlayer = new MediaPlayer();
 
 		String path = context.getFilesDir().getPath() + "/" + fileName + ".mid";
+		System.out.println(path);
 		audioPlayer.setDataSource(path);
 		audioPlayer.prepare();
 		audioPlayer.start();

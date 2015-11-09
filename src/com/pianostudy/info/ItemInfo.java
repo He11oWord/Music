@@ -1,5 +1,7 @@
 package com.pianostudy.info;
 
+import com.pianostudy.util.MidiCreateUtil;
+
 
 /**
  * 每个条目的所有信息
@@ -51,22 +53,22 @@ public class ItemInfo {
 	 * 输出 "名称  -0-F3  A3" 名称-用names[index]判断，等级和第一个字符码，其他字符码
 	 * @return
 	 */
-//	public String toStr() {
-//		//输出 "-0-F3" 等级 和 第一个字符码
-//		String str = "-" + factor + "-"+ MidiGenerator.notename[notes[0] - TestGenerator.noteStart];
-//		//如果不是单音模式，在前面补上名称“大大 + 。。。”
-//		if (index >= 0) {
-//			str = names[index] + str;
-//		}
-//
-//		//如果有多个音符，则在后面补上
-//		for (int i = 1; i < num; i++) {
-//			str = str
-//					+ ":"
-//					+ MidiGenerator.notename[notes[i] - TestGenerator.noteStart];
-//		}
-//		return str;
-//	}
+	public String toStr() {
+		//输出 "-0-F3" 等级 和 第一个字符码
+		String str = "-" + factor + "-"+ MidiCreateUtil.notename[notes[0] - TestGenerator.noteStart];
+		//如果不是单音模式，在前面补上名称“大大 + 。。。”
+		if (index >= 0) {
+			str = names[index] + str;
+		}
+
+		//如果有多个音符，则在后面补上
+		for (int i = 1; i < num; i++) {
+			str = str
+					+ ":"
+					+ MidiCreateUtil.notename[notes[i] - TestGenerator.noteStart];
+		}
+		return str;
+	}
 
 	/**
 	 * TestItem的构造方法

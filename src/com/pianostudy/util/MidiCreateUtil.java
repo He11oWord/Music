@@ -1,11 +1,7 @@
 package com.pianostudy.util;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.pianostudy.info.ItemInfo;
 
@@ -26,6 +22,12 @@ public class MidiCreateUtil {
 			2, 56, -4, 62, -116, 0, -59, 39, -116, 0, -84, 64, 98, 13, 2, 56,
 			-4, 62, -116, 0, -59, 39, -116, 0, -84, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, -65 };
+	/**
+	 * 钢琴键的名字
+	 */
+	public static String notename[] = { "F3", "#F3", "G3", "#G3", "A3", "#A3",
+			"B3", "C4", "#C4", "D4", "#D4", "E4", "F4", "#F4", "G4", "#G4",
+			"A4", "#A4", "B4", "C5", "#C5", "D5", "#D5", "E5", "F5" };
 	static byte[] twocordMidi = { (byte) 0x4D, (byte) 0x54, (byte) 0x68,
 			(byte) 0x64, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x06,
 			(byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x02, (byte) 0x04,
@@ -367,10 +369,36 @@ public class MidiCreateUtil {
 		fos.close();
 		Log.d(tag, "成功");
 	}
-
-	public static void write(Context context, String fileName, ItemInfo t) {
-		// if (t.num == 1)
-		// return makeseq(t.notes[0]);
+	/**
+	 * 选择性的写入题目
+	 * 
+	 * @param context
+	 * @param string
+	 * @param t
+	 */
+	public static void writeSelect(Context context, String string, ItemInfo t) {
+		if (t.isCord) {
+			writeAll(context, string, t);
+		} else {
+			writeSpit(context, string, t);
+		}
+	}
+	/**
+	 * 该方法用于一次性把题目播放完毕
+	 * 
+	 * @param context
+	 * @param fileName
+	 * @param t
+	 */
+	public static void writeAll(Context context, String fileName, ItemInfo t) {
+		 if (t.num == 1) {
+			 try {
+				writeKey(context,fileName,t.notes[0]);
+				return;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		 }
 		int[][] pos = posCord;
 		try {
 			File file = new File(context.getFilesDir().getPath() + "/"
@@ -396,12 +424,84 @@ public class MidiCreateUtil {
 			fos.write(b);
 			fos.close();
 			Log.d(tag, "成功");
+			System.out.println(bytesToHexString(b));
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			Log.d(tag, "出错了");
 		}
 
+	}
+
+	/**
+	 * 该方法写出的题目是分解之后de
+	 * 
+	 * @param context
+	 * @param fileName
+	 * @param t
+	 */
+	public static void writeSpit(Context context, String fileName, ItemInfo t) {
+		int[][] pos = posAna;
+
+		try {
+			File file = new File(context.getFilesDir().getPath() + "/"
+					+ fileName + ".mid");
+			Log.d(tag, file.toString());
+			FileOutputStream fos = new FileOutputStream(file);
+			int n = t.num;
+			int ind = t.num - 1;
+			byte b[] = exana[ind];
+
+			for (int i = 0; i < n; i++) {
+				b[pos[ind][2 * i]] = (byte) t.notes[i];
+				b[pos[ind][2 * i + 1]] = (byte) t.notes[i];
+			}
+			fos.write(b);
+			fos.close();
+			Log.d(tag, "成功");
+			System.out.println(bytesToHexString(b));
+		} catch (Exception ex) {
+			Log.d(tag, "出错了");
+		}
+	}
+
+	/**
+	 * 传入一个byte数组，用于打印调试使用
+	 * 
+	 * @param src
+	 *            byte数组
+	 * @return
+	 */
+	public static String bytesToHexString(byte[] src) {
+		StringBuilder stringBuilder = new StringBuilder("");
+		if (src == null || src.length <= 0) {
+			return null;
+		}
+		for (int i = 0; i < src.length; i++) {
+			int v = src[i] & 0xFF;
+			String hv = Integer.toHexString(v);
+			if (hv.length() < 2) {
+				stringBuilder.append(0);
+			}
+			stringBuilder.append(hv);
+		}
+		return stringBuilder.toString();
+	}
+	public static void writeKey(Context context, String fileName, int m)
+			throws Exception {
+		File file = new File(context.getFilesDir().getPath() + "/" + fileName
+				+ ".mid");
+		Log.d(tag, file.toString());
+		// "/data/data/com.example.testmediaplayer/files/temp.mid");
+		FileOutputStream fos = new FileOutputStream(file);
+		byte[] b = twocordMidi;
+		int[][] pos = posCord;
+		for (int i = 0; i < 4; i++) {
+			b[pos[1][i]] = (byte) (m);
+		}
+		fos.write(b);
+		fos.close();
+		Log.d(tag, "成功");
 	}
 
 }

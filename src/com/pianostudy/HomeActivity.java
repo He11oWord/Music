@@ -40,7 +40,7 @@ public class HomeActivity extends Activity {
 	
 	//进入竖屏钢琴键的页面
 	public void enterPortraitButton(View view ){
-		Intent intent = new Intent(this,PortraitButtonActivity.class);
+		Intent intent = new Intent(this,PitchPortraitButtonActivity.class);
 		startActivity(intent);
 	}
 	
