@@ -22,7 +22,7 @@ public class HomeActivity extends Activity {
 	
 	//进入钢琴键的页面
 	public void enterButton(View view ){
-		Intent intent = new Intent(this,ButtonActivity.class);
+		Intent intent = new Intent(this,AnalysysPortraitButtonActivity.class);
 		startActivity(intent);
 	}
 	

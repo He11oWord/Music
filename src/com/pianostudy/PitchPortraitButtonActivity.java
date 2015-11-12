@@ -6,8 +6,10 @@ import com.pianostudy.info.TestType;
 import com.pianostudy.listener.ProtraitButtonOnTouchListener;
 import com.pianostudy.manager.MidiBaseManager;
 import com.pianostudy.thread.PlayerThread;
+import com.pianostudy.util.MidiCreateUtil;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,19 +20,21 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 /**
- * 钢琴键竖排的界面
+ * 音高钢琴键竖排的界面
  * 
  * @Description TODO
  * @author lizhao
  * @date 2015-11-7 下午10:22:03
  */
-public class PitchPortraitButtonActivity extends Activity implements OnClickListener {
+public class PitchPortraitButtonActivity extends Activity implements
+		OnClickListener {
 
 	/**
 	 * 十六个白键
 	 */
-	private CheckBox w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, w13,
+	private CheckBox  w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, w13,
 			w14, w15, w16;
+	private Button w1;
 	/**
 	 * 十个黑键
 	 */
@@ -98,18 +102,20 @@ public class PitchPortraitButtonActivity extends Activity implements OnClickList
 	 * 新开线程用于播放
 	 */
 	private PlayerThread playerThread;
-
+	private Button button_note_name;
+	private ArrayList<CheckBox> cbList;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_portraitbutton);
-
+		cbList = new ArrayList<CheckBox>();
 		initData();
 		initView();
 		resetKey();
 		initEvent();
 		initButtonEvent();
+		initText();
 		playerThread = new PlayerThread(this, itemMode, itemType);
 
 	}
@@ -130,8 +136,9 @@ public class PitchPortraitButtonActivity extends Activity implements OnClickList
 	 * 初始化界面 实例化数组和checkBox
 	 */
 	public void initView() {
+		button_note_name = (Button) findViewById(R.id.button_note_name);
 		allCheckBoxList = new ArrayList<CheckBox>();
-		w1 = (CheckBox) findViewById(R.id.w1);
+		w1 = (Button) findViewById(R.id.w1);
 		w2 = (CheckBox) findViewById(R.id.w2);
 		w3 = (CheckBox) findViewById(R.id.w3);
 		w4 = (CheckBox) findViewById(R.id.w4);
@@ -196,19 +203,17 @@ public class PitchPortraitButtonActivity extends Activity implements OnClickList
 		nextLevelButton = (Button) findViewById(R.id.next_level);
 		lastItemButton = (Button) findViewById(R.id.last_item);
 		lastLevelButton = (Button) findViewById(R.id.last_level);
+	
 
 	}
-
 	/**
 	 * 初始化钢琴键的选择事件 给他们添加选择变化事件
 	 */
 	public void initEvent() {
-		// 设置键的点击事件
-		w1.setOnCheckedChangeListener(new ProtraitButtonOnTouchListener(this,
-				12));
+		
 		for (int i = 0; i < allCheckBoxList.size(); i++) {
 			allCheckBoxList.get(i).setOnCheckedChangeListener(
-					new ProtraitButtonOnTouchListener(this, i));
+					new ProtraitButtonOnTouchListener(this, i,cbList));
 		}
 
 	}
@@ -223,8 +228,49 @@ public class PitchPortraitButtonActivity extends Activity implements OnClickList
 		nextLevelButton.setOnClickListener(this);
 		lastItemButton.setOnClickListener(this);
 		lastLevelButton.setOnClickListener(this);
+		button_note_name.setOnClickListener(this);
+		w1.setOnClickListener(this);
 	}
 
+	
+
+	/**
+	 * 设置钢琴键的名字
+	 */
+	private void initText() {
+		
+		w1.setText("F4");
+		w1.setTextSize(10);
+		for (int i = 0; i < allCheckBoxList.size(); i++) {
+			allCheckBoxList.get(i).setText(MidiCreateUtil.notename[i]);
+			allCheckBoxList.get(i).setTextSize(10);
+		}
+		w1.setTextColor(Color.TRANSPARENT);
+		for (int i = 0; i < allCheckBoxList.size(); i++) {
+			allCheckBoxList.get(i).setTextColor(Color.TRANSPARENT);
+		}
+	}
+	private boolean isShowName = false;
+	/**
+	 * 改变文本
+	 */
+	private void changeText(){
+		if (isShowName) {
+	
+			isShowName = false;
+			w1.setTextColor(Color.TRANSPARENT);
+			for (int i = 0; i < allCheckBoxList.size(); i++) {
+				allCheckBoxList.get(i).setTextColor(Color.TRANSPARENT);
+			}
+		} else {
+			
+			isShowName = true;
+			w1.setTextColor(Color.BLACK);
+			for (int i = 0; i < allCheckBoxList.size(); i++) {
+				allCheckBoxList.get(i).setTextColor(Color.BLACK);
+			}
+		}
+	}
 	@Override
 	/**
 	 * 实现OnClickListener中的onClick()方法
@@ -236,6 +282,7 @@ public class PitchPortraitButtonActivity extends Activity implements OnClickList
 			playEvent();
 			break;
 		case R.id.ok:
+			okevent();
 			Log.d(tag, "ok");
 			break;
 		case R.id.next_item:
@@ -254,6 +301,14 @@ public class PitchPortraitButtonActivity extends Activity implements OnClickList
 			moveevent(-2);
 			Log.d(tag, "last_level");
 			break;
+		case R.id.button_note_name:
+			changeText();
+			Log.d(tag, "button_note_name");
+			Log.d(tag, cbList.size()+"");
+			break;
+		case R.id.w1:
+			w16.setChecked(!w16.isChecked());
+			break;
 		default:
 			break;
 		}
@@ -263,20 +318,23 @@ public class PitchPortraitButtonActivity extends Activity implements OnClickList
 	 * 重置所有按键
 	 */
 	public void resetKey() {
+//		
 		for (int i = 0; i < allCheckBoxList.size(); i++) {
 			allCheckBoxList.get(i).setOnCheckedChangeListener(null);
 			allCheckBoxList.get(i).setChecked(false);
 		}
+		cbList.clear();
 	}
 
 	/**
 	 * 点击play响应的事件
 	 */
 	private void playEvent() {
+		isPlay = true;
 		resetKey();
 		initEvent();
 		String s = playerThread.play();
-		tv_reminder.setText("请点击音符键后点'Ok'键！！！" + s);
+		tv_reminder.setText("现在是答题模式：请点击音符键后点'Ok'键！！！" + s);
 	}
 
 	/**
@@ -296,58 +354,26 @@ public class PitchPortraitButtonActivity extends Activity implements OnClickList
 	}
 
 	/**
-	 * 一些暂时没有用的信息
+	 * 点击ok键响应的事件
 	 */
-	private void unless() {
-		/**
-		 * 用于存放低音黑色checkBox的数组
-		 */
-		ArrayList<CheckBox> lowBlackCheckBoxList;
-		/**
-		 * 用于存放低音白色checkBox的数组
-		 */
-		ArrayList<CheckBox> lowWhiteCheckBoxList;
-		/**
-		 * 用于存放高音黑色checkBox的数组
-		 */
-		ArrayList<CheckBox> highBlackCheckBoxList;
-		/**
-		 * 用于存放高音白色checkBox的数组
-		 */
-		ArrayList<CheckBox> highWhiteCheckBoxList;
-		lowBlackCheckBoxList = new ArrayList<CheckBox>();
-		lowWhiteCheckBoxList = new ArrayList<CheckBox>();
-		highBlackCheckBoxList = new ArrayList<CheckBox>();
-		highWhiteCheckBoxList = new ArrayList<CheckBox>();
-		highBlackCheckBoxList.add(b1);
-		highBlackCheckBoxList.add(b2);
-		highBlackCheckBoxList.add(b3);
-		highBlackCheckBoxList.add(b4);
-		highBlackCheckBoxList.add(b5);
-
-		lowBlackCheckBoxList.add(b6);
-		lowBlackCheckBoxList.add(b7);
-		lowBlackCheckBoxList.add(b8);
-		lowBlackCheckBoxList.add(b9);
-		lowBlackCheckBoxList.add(b10);
-
-		highWhiteCheckBoxList.add(w1);
-		highWhiteCheckBoxList.add(w2);
-		highWhiteCheckBoxList.add(w3);
-		highWhiteCheckBoxList.add(w4);
-		highWhiteCheckBoxList.add(w5);
-		highWhiteCheckBoxList.add(w6);
-		highWhiteCheckBoxList.add(w7);
-		highWhiteCheckBoxList.add(w8);
-
-		lowWhiteCheckBoxList.add(w9);
-		lowWhiteCheckBoxList.add(w10);
-		lowWhiteCheckBoxList.add(w11);
-		lowWhiteCheckBoxList.add(w12);
-		lowWhiteCheckBoxList.add(w13);
-		lowWhiteCheckBoxList.add(w14);
-		lowWhiteCheckBoxList.add(w15);
-		lowWhiteCheckBoxList.add(w16);
+	public void okevent() {
+		String str;
+		if (!isPlay) {
+		} else {
+			boolean r = playerThread.ok(cbList);
+			resetKey();
+			initEvent();
+			// 进行判断，如果正确，进行下一题
+			if (r) {
+				tv_reminder.setText("恭喜你，答对了:请点击'Play键听音'！！！");
+				isPlay = false;// 设置不是play模式
+				str = playerThread.setnext(1);// 下一题，并返回
+				tv_itemInfo.setText(str);
+			} else {
+				isPlay = true;
+				tv_reminder.setText("不好意思，答错了:请点击音符键后点确认键！！！");
+			}
+		}
 	}
 
 }

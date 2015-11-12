@@ -112,7 +112,7 @@ public class MidiBaseManager {
 			}
 			level--;
 			if (level < 0)
-				level = testManager.maxlev;
+				level = testManager.maxlev-1;
 			return 0;
 		}
 		// 先清空item在降等级

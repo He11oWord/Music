@@ -2,6 +2,6 @@
 <!-- 黑键的UI -->
 <selector
   xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_checked="true" android:drawable="@drawable/press" />
+    <item android:state_checked="true" android:drawable="@drawable/press2" />
     <item android:drawable="@drawable/black" />
 </selector>

@@ -2,35 +2,66 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="@drawable/xingmang"
+    android:orientation="vertical"
+    android:weightSum="3" >
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="enterButton"
-        android:text="进入横屏钢琴键的页面" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:orientation="horizontal" 
+        android:background="@drawable/logo2"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="进入乐理的页面" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="20dip"
+        android:weightSum="2" >
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="enterAnalysys"
-        android:text="进入分析的页面" />
+        <Button
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="乐 理 " />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="enterPitch"
-        android:text="进入音高的页面" />
+        <Button
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="节 奏" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="20dip"
+        android:weightSum="2" >
+
+        <Button
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="enterAnalysys"
+            android:text="分 析" />
+
+        <Button
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="enterPitch"
+            android:text="音 高" />
+    </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="enterPortraitButton"
-        android:text="进入竖屏钢琴键的页面" />
+        android:text="进入竖屏钢琴键的页面"
+        android:visibility="invisible" />
 
 </LinearLayout>

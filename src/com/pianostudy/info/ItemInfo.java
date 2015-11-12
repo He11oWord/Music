@@ -55,11 +55,24 @@ public class ItemInfo {
 	 */
 	public String toStr() {
 		//输出 "-0-F3" 等级 和 第一个字符码
-		String str = "-" + factor + "-"+ MidiCreateUtil.notename[notes[0] - TestGenerator.noteStart];
+		String str = "-" + factor+1 + "-"+ MidiCreateUtil.notename[notes[0] - TestGenerator.noteStart];
 		//如果不是单音模式，在前面补上名称“大大 + 。。。”
 		if (index >= 0) {
 			str = names[index] + str;
 		}
+
+		//如果有多个音符，则在后面补上
+		for (int i = 1; i < num; i++) {
+			str = str
+					+ ":"
+					+ MidiCreateUtil.notename[notes[i] - TestGenerator.noteStart];
+		}
+		return str;
+	}
+	
+	public String toStringNoteName(){
+		String str = MidiCreateUtil.notename[notes[0] - TestGenerator.noteStart];
+		
 
 		//如果有多个音符，则在后面补上
 		for (int i = 1; i < num; i++) {
